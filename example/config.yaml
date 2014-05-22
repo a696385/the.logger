@@ -7,6 +7,12 @@ $config:
     format:
       name: 'default'
       value: '%level, %date, %module, %hostname, %args, %code, %trace, %errors, %stack'
+  fluentd:
+    tag: 'ru.realweb.redfog.dsp'
+    host: 'logging.vmc.loc'
+    port: 24224
+    timeout: 5
+    verbose: true
 default:
   all:
     - file:
@@ -26,4 +32,8 @@ default:
           $extend: :$config.mongo
           ttl: 100
       - console: false
+  test.fluentd:
+    info,debug,error,fatal:
+      fluentd:
+        $extend: :$config.fluentd
 
